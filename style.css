@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #0f172a;
+  color: #f8fafc;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+header {
+  text-align: center;
+}
+
+.progress-bar-bg {
+  background: #334155;
+  border-radius: 10px;
+  height: 12px;
+  overflow: hidden;
+  margin: 10px 0 5px;
+}
+
+.progress-bar-fill {
+  background: #22c55e;
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.card-header {
+  margin-bottom: 15px;
+}
+
+.tag {
+  background: #3b82f6;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 10px;
+  font-size: 1.4rem;
+}
+
+.theory-text {
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+textarea {
+  width: 100%;
+  background: #090d16;
+  color: #38bdf8;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  resize: vertical;
+  margin: 8px 0 15px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+button {
+  width: 100%;
+  background: #22c55e;
+  color: #0f172a;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+button:disabled {
+  background: #475569;
+  cursor: not-allowed;
+  color: #94a3b8;
+}
+
+.output-box {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #090d16;
+  border: 1px solid #334155;
+  font-size: 0.9rem;
+}
+
+.output-box.hidden {
+  display: none;
+}
+
+.navigation-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.navigation-controls button {
+  background: #334155;
+  color: white;
+}

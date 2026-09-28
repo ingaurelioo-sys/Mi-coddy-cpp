@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Coddy C++</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header con progreso -->
+    <header>
+      <h1>Aprende C++</h1>
+      <div class="progress-bar-bg">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
+      <span id="progress-text">0%</span>
+    </header>
+
+    <!-- Tarjeta de Lección -->
+    <main class="card">
+      <div class="card-header">
+        <span id="lesson-category" class="tag">Lección 1</span>
+        <h2 id="lesson-title">Cargando...</h2>
+      </div>
+
+      <p id="lesson-theory" class="theory-text"></p>
+
+      <!-- Contenedor del Editor / Pregunta -->
+      <div id="interactive-zone">
+        <label for="code-input">Escribe tu código C++ aquí:</label>
+        <textarea id="code-input" rows="6" placeholder="Escribe tu código..."></textarea>
+      </div>
+
+      <!-- Botón de acción -->
+      <button id="check-btn" onclick="checkAnswer()">Comprobar Código</button>
+
+      <!-- Consola de salida / Respuesta -->
+      <div id="output-box" class="output-box hidden">
+        <strong>Resultado:</strong>
+        <pre id="output-text"></pre>
+      </div>
+    </main>
+
+    <!-- Navegación entre lecciones -->
+    <div class="navigation-controls">
+      <button id="prev-btn" onclick="changeLesson(-1)" disabled>Anterior</button>
+      <button id="next-btn" onclick="changeLesson(1)" disabled>Siguiente</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
