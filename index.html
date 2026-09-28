@@ -3,44 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coddy - Aprende C++</title>
+  <title>Coddy - Aprende a Programar</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="app-container">
-    <header class="app-header">
-      <div class="logo">
-        <span class="logo-icon">⚡</span>
-        <span class="logo-text">Coddy</span>
+  <div class="app-shell">
+    
+    <!-- BARRA SUPERIOR ESTATUS -->
+    <header class="top-bar">
+      <div class="brand">
+        <span class="icon">⚡</span>
+        <span class="title">Coddy</span>
       </div>
-      <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
+      <div class="user-stats">
+        <div class="stat"><span class="icon">🔥</span><span id="streakCount">1</span></div>
+        <div class="stat"><span class="icon">⚡</span><span id="xpCount">120</span> XP</div>
+        <div class="stat"><span class="icon">❤️</span><span id="heartsCount">Infinito</span></div>
       </div>
-      <span class="progress-percentage" id="progressText">0%</span>
     </header>
 
-    <main class="lesson-card">
-      <div class="badge" id="lessonBadge">Lección 1 de 3</div>
-      <h2 id="lessonTitle">Cargando...</h2>
-      <p id="lessonTheory" class="theory-text"></p>
+    <!-- NAVEGACIÓN Y SELECCIÓN DE CURSO -->
+    <nav class="course-selector">
+      <button class="course-tab active" data-lang="cpp">C++</button>
+      <button class="course-tab" data-lang="html">HTML & CSS</button>
+      <button class="course-tab" data-lang="python">Python</button>
+      <button class="course-tab" data-lang="js">JavaScript</button>
+    </nav>
 
-      <div class="editor-section">
-        <label for="codeEditor" class="editor-label">Tu código C++:</label>
-        <textarea id="codeEditor" spellcheck="false"></textarea>
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
+      
+      <!-- BARRA DE PROGRESO DE LECCIÓN -->
+      <div class="progress-section">
+        <div class="progress-track">
+          <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <span class="progress-text" id="progressPercent">0%</span>
       </div>
 
-      <div class="action-bar">
-        <button id="runBtn" class="btn primary-btn">Comprobar</button>
+      <!-- TARJETA DE LECCIÓN INTERACTIVA -->
+      <div class="card" id="lessonCard">
+        <div class="card-header">
+          <span class="tag" id="lessonCategory">MÓDULO 1</span>
+          <h2 id="lessonTitle">Cargando lección...</h2>
+        </div>
+
+        <div class="card-body">
+          <p id="lessonExplanation" class="explanation-text"></p>
+          
+          <!-- CONTENEDOR DINÁMICO DE EJERCICIO -->
+          <div id="exerciseContainer" class="exercise-container">
+            <!-- Aquí el JS inyecta el editor, cuestionario o slots -->
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div id="feedback" class="feedback-banner hidden"></div>
+          <div class="button-group">
+            <button id="checkBtn" class="btn btn-primary">Comprobar</button>
+            <button id="nextBtn" class="btn btn-secondary hidden">Continuar ➔</button>
+          </div>
+        </div>
       </div>
 
-      <div id="feedbackBox" class="feedback-box hidden"></div>
     </main>
-
-    <footer class="app-footer">
-      <button id="prevBtn" class="btn secondary-btn" disabled>Anterior</button>
-      <button id="nextBtn" class="btn secondary-btn" disabled>Siguiente</button>
-    </footer>
   </div>
 
   <script src="app.js"></script>

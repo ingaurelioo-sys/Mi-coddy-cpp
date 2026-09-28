@@ -1,96 +1,164 @@
-const lessons = [
-  {
-    id: 1,
-    title: "1. Tu primer Hola Mundo",
-    theory: "En C++, para imprimir texto en pantalla utilizamos <code>std::cout &lt;&lt; \"texto\";</code>. Asegúrate de finalizar la línea con un punto y coma (;).",
-    initialCode: "#include <iostream>\n\nint main() {\n    // Escribe tu codigo aqui\n    \n    return 0;\n}",
-    expected: ["std::cout", "Hola Mundo"],
-    hint: "Debes incluir std::cout << \"Hola Mundo\"; dentro de main()."
-  },
-  {
-    id: 2,
-    title: "2. Variables Enteras (int)",
-    theory: "Una variable guarda datos. Para crear un número entero usas <code>int nombre = valor;</code>. Crea una variable llamada <code>edad</code> con valor <code>18</code> e imprímela.",
-    initialCode: "#include <iostream>\n\nint main() {\n    // Crea la variable edad aqui\n    \n    return 0;\n}",
-    expected: ["int", "edad", "18"],
-    hint: "Escribe: int edad = 18; y luego std::cout << edad;"
-  },
-  {
-    id: 3,
-    title: "3. Entrada de Datos (std::cin)",
-    theory: "Para pedir un dato al usuario usamos <code>std::cin &gt;&gt; variable;</code>. Declara una variable llamada <code>numero</code> y léela usando cin.",
-    initialCode: "#include <iostream>\n\nint main() {\n    int numero;\n    // Lee la variable numero usando std::cin\n    \n    return 0;\n}",
-    expected: ["std::cin", "numero"],
-    hint: "Usa la instrucción: std::cin >> numero;"
-  }
-];
+// BANCO DE CURSOS Y LECCIONES ESTILO CODDY
+const courses = {
+  cpp: [
+    {
+      type: "code",
+      category: "C++ • INTRODUCCIÓN",
+      title: "Tu primer Hola Mundo",
+      explanation: "Escribe el comando necesario para imprimir 'Hola Mundo' en la consola C++.",
+      initialCode: "#include <iostream>\n\nint main() {\n    // Escribe abajo:\n    \n    return 0;\n}",
+      expected: ["std::cout", "Hola Mundo"],
+      hint: "Usa std::cout << \"Hola Mundo\";"
+    },
+    {
+      type: "quiz",
+      category: "C++ • VARIABLES",
+      title: "¿Cuál es el tipo para números enteros?",
+      explanation: "Selecciona el tipo de dato correcto para guardar números enteros sin decimales.",
+      options: ["float", "int", "string", "bool"],
+      correct: 1,
+      hint: "En C++, int representa 'integer' (entero)."
+    },
+    {
+      type: "code",
+      category: "C++ • ENTRADAS",
+      title: "Lectura con std::cin",
+      explanation: "Lee un valor entero dentro de la variable 'puntos'.",
+      initialCode: "#include <iostream>\n\nint main() {\n    int puntos;\n    // Lee puntos aqui:\n    \n    return 0;\n}",
+      expected: ["std::cin", "puntos"],
+      hint: "Utiliza std::cin >> puntos;"
+    }
+  ],
+  html: [
+    {
+      type: "quiz",
+      category: "HTML • ESTRUCTURA",
+      title: "¿Qué etiqueta define el título principal?",
+      explanation: "Selecciona la etiqueta encargada del encabezado más importante de una página.",
+      options: ["<p>", "<h1>", "<title>", "<head>"],
+      correct: 1,
+      hint: "<h1> define el Heading 1."
+    },
+    {
+      type: "code",
+      category: "HTML • BOTONES",
+      title: "Crear un Botón",
+      explanation: "Escribe el código HTML para un botón que diga 'Enviar'.",
+      initialCode: "<!-- Escribe tu boton abajo -->\n",
+      expected: ["<button>", "Enviar", "</button>"],
+      hint: "Escribe <button>Enviar</button>"
+    }
+  ],
+  python: [
+    {
+      type: "code",
+      category: "PYTHON • BASICO",
+      title: "Imprimir en pantalla",
+      explanation: "Usa la función print() para mostrar 'Hola Python'.",
+      initialCode: "# Escribe tu codigo aqui\n",
+      expected: ["print", "Hola Python"],
+      hint: "Escribe print('Hola Python')"
+    }
+  ]
+};
 
-let currentLessonIndex = 0;
+let currentLang = "cpp";
+let currentIndex = 0;
+let selectedOption = null;
 
-const lessonBadge = document.getElementById("lessonBadge");
+// ELEMENTOS DOM
+const lessonCategory = document.getElementById("lessonCategory");
 const lessonTitle = document.getElementById("lessonTitle");
-const lessonTheory = document.getElementById("lessonTheory");
-const codeEditor = document.getElementById("codeEditor");
-const runBtn = document.getElementById("runBtn");
-const prevBtn = document.getElementById("prevBtn");
+const lessonExplanation = document.getElementById("lessonExplanation");
+const exerciseContainer = document.getElementById("exerciseContainer");
+const checkBtn = document.getElementById("checkBtn");
 const nextBtn = document.getElementById("nextBtn");
-const feedbackBox = document.getElementById("feedbackBox");
+const feedback = document.getElementById("feedback");
 const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
+const progressPercent = document.getElementById("progressPercent");
 
-function loadLesson(index) {
-  const lesson = lessons[index];
-  lessonBadge.textContent = `Lección ${lesson.id} de ${lessons.length}`;
-  lessonTitle.textContent = lesson.title;
-  lessonTheory.innerHTML = lesson.theory;
-  codeEditor.value = lesson.initialCode;
-  
-  feedbackBox.className = "feedback-box hidden";
-  feedbackBox.textContent = "";
-
-  prevBtn.disabled = index === 0;
-  nextBtn.disabled = index === lessons.length - 1;
-
-  updateProgress();
-}
-
-function updateProgress() {
-  const percentage = Math.round(((currentLessonIndex + 1) / lessons.length) * 100);
-  progressBar.style.width = `${percentage}%`;
-  progressText.textContent = `${percentage}%`;
-}
-
-runBtn.addEventListener("click", () => {
-  const userCode = codeEditor.value;
-  const currentLesson = lessons[currentLessonIndex];
-
-  const isValid = currentLesson.expected.every(term => userCode.includes(term));
-
-  feedbackBox.classList.remove("hidden", "success", "error");
-
-  if (isValid) {
-    feedbackBox.classList.add("success");
-    feedbackBox.textContent = "¡Correcto! Excelente trabajo. Puedes pasar a la siguiente lección.";
-    nextBtn.disabled = currentLessonIndex === lessons.length - 1;
-  } else {
-    feedbackBox.classList.add("error");
-    feedbackBox.textContent = `Pista: ${currentLesson.hint}`;
-  }
+// CAMBIO DE CURSO
+document.querySelectorAll(".course-tab").forEach(tab => {
+  tab.addEventListener("click", (e) => {
+    document.querySelectorAll(".course-tab").forEach(t => t.classList.remove("active"));
+    e.target.classList.add("active");
+    currentLang = e.target.dataset.lang;
+    currentIndex = 0;
+    renderLesson();
+  });
 });
 
-prevBtn.addEventListener("click", () => {
-  if (currentLessonIndex > 0) {
-    currentLessonIndex--;
-    loadLesson(currentLessonIndex);
+function renderLesson() {
+  const lessonList = courses[currentLang] || [];
+  if (currentIndex >= lessonList.length) {
+    exerciseContainer.innerHTML = "<h3>🎉 ¡Has completado este módulo de " + currentLang.toUpperCase() + "!</h3>";
+    checkBtn.classList.add("hidden");
+    nextBtn.classList.add("hidden");
+    return;
+  }
+
+  const lesson = lessonList[currentIndex];
+  lessonCategory.textContent = lesson.category;
+  lessonTitle.textContent = lesson.title;
+  lessonExplanation.textContent = lesson.explanation;
+  
+  feedback.className = "feedback-banner hidden";
+  checkBtn.classList.remove("hidden");
+  nextBtn.classList.add("hidden");
+  selectedOption = null;
+
+  // Actualizar Progreso
+  const progress = Math.round(((currentIndex + 1) / lessonList.length) * 100);
+  progressBar.style.width = `${progress}%`;
+  progressPercent.textContent = `${progress}%`;
+
+  // Renderizar tipo de ejercicio
+  if (lesson.type === "code") {
+    exerciseContainer.innerHTML = `<textarea id="codeEditor" class="code-area" spellcheck="false">${lesson.initialCode}</textarea>`;
+  } else if (lesson.type === "quiz") {
+    let html = `<div class="quiz-options">`;
+    lesson.options.forEach((opt, i) => {
+      html += `<button class="quiz-btn" onclick="selectQuizOption(${i}, this)">${opt}</button>`;
+    });
+    html += `</div>`;
+    exerciseContainer.innerHTML = html;
+  }
+}
+
+window.selectQuizOption = function(index, btn) {
+  document.querySelectorAll(".quiz-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+  selectedOption = index;
+};
+
+// COMPROBACIÓN
+checkBtn.addEventListener("click", () => {
+  const lesson = courses[currentLang][currentIndex];
+  let isCorrect = false;
+
+  if (lesson.type === "code") {
+    const code = document.getElementById("codeEditor").value;
+    isCorrect = lesson.expected.every(term => code.includes(term));
+  } else if (lesson.type === "quiz") {
+    isCorrect = (selectedOption === lesson.correct);
+  }
+
+  feedback.classList.remove("hidden", "success", "error");
+  if (isCorrect) {
+    feedback.classList.add("success");
+    feedback.textContent = "¡Excelente! Respuesta correcta.";
+    checkBtn.classList.add("hidden");
+    nextBtn.classList.remove("hidden");
+  } else {
+    feedback.classList.add("error");
+    feedback.textContent = lesson.hint || "Inténtalo de nuevo.";
   }
 });
 
 nextBtn.addEventListener("click", () => {
-  if (currentLessonIndex < lessons.length - 1) {
-    currentLessonIndex++;
-    loadLesson(currentLessonIndex);
-  }
+  currentIndex++;
+  renderLesson();
 });
 
-// Cargar primera lección al inicio
-loadLesson(0);
+// Inicio
+renderLesson();
